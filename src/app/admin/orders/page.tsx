@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import OrderList from "@/components/ui/OrderList";
 
@@ -12,7 +13,7 @@ export default function OrdersPage() {
       <h1 className="text-2xl font-bold mb-6 text-gray-800">
         Дашборд заказов CleanGo
       </h1>
-      <OrderList />
+      <OrderList role="service" />
     </div>
   );
 }

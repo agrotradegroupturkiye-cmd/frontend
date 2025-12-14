@@ -1,5 +1,6 @@
-import React from 'react';
-interface StatusBadgeProps { status: string }
+interface StatusBadgeProps {
+  status: string;
+}
 export default function StatusBadge({ status }: StatusBadgeProps) {
   return <span className="px-2 py-1 rounded bg-gray-200">{status}</span>;
 }

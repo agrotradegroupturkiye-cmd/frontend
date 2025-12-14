@@ -1,1 +1,5 @@
-export default function Card({ children }) { return <div className="bg-white shadow p-4 rounded">{children}</div>; }
+import React from 'react';
+interface CardProps { children: React.ReactNode; className?: string }
+export default function Card({ children, className }: CardProps) {
+  return <div className={`bg-white shadow p-4 rounded ${className || ''}`}>{children}</div>;
+}

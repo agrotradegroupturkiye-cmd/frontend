@@ -1,3 +1,11 @@
+export { default as Badge } from './Badge';
 export { default as Button } from './Button';
-export { default as CardService } from './CardService';
-export { default as FilterPanel } from './FilterPanel';
+export { Card } from './UIWrapper';
+export { default as Modal } from './Modal';
+export { default as OrderCard } from './OrderCard';
+export { default as ProductCard } from './ProductCard';
+export { default as StatusBadge } from './StatusBadge';
+export { default as Table } from './Table';
+export { default as Tooltip } from './Tooltip';
+export { default as UserCard } from './UserCard';
+export { default as OrderList } from './OrderList';

@@ -111,15 +111,15 @@ export default function ProviderDashboard() {
                 <button className="px-4 py-2 bg-indigo-500 text-white rounded-2xl hover:scale-105 transition" onClick={toggleSelectAll}>
                     {selectAll ? 'Снять выделение' : 'Выбрать все'}
                 </button>
-                <button className="px-4 py-2 bg-green-500 text-white rounded-2xl hover:scale-105 transition" onClick={() => massUpdateStatus('Выполнено')}>
-                    Выполнено для выбранных
+                <button className="px-4 py-2 bg-green-500 text-white rounded-2xl hover:scale-105 transition" onClick={() => massUpdateStatus('Выполнен')}>
+                    Выполнен для выбранных
                 </button>
             </div>
 
             {/* Список заказов */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {sortedOrders.map(order => (
-                    <div key={order.id} className={`p-4 border shadow cursor-pointer relative rounded-3xl transform transition-all duration-300 ease-out ${order.urgent ? 'border-red-500 bg-red-50' : order.status==='Выполнено'?'bg-gray-100 border-gray-300 opacity-70':'border-gray-300 bg-white'} ${order.selected?'ring-2 ring-indigo-400':''}`} onClick={() => setSelectedOrder(order)}>
+                    <div key={order.id} className={`p-4 border shadow cursor-pointer relative rounded-3xl transform transition-all duration-300 ease-out ${order.urgent ? 'border-red-500 bg-red-50' : order.status==='Выполнен'?'bg-gray-100 border-gray-300 opacity-70':'border-gray-300 bg-white'} ${order.selected?'ring-2 ring-indigo-400':''}`} onClick={() => setSelectedOrder(order)}>
                         <input type="checkbox" className="absolute top-2 left-2" checked={order.selected || false} onChange={() => setOrders(prev => prev.map(o => o.id===order.id?{...o,selected:!o.selected}:o))}/>
                         {order.urgent && <span className="absolute top-2 right-2 text-red-600 font-bold text-sm">⚡ Срочно</span>}
                         {order.vip && <span className="absolute top-6 right-2 text-purple-600 font-bold text-sm">★ VIP</span>}
@@ -146,7 +146,7 @@ export default function ProviderDashboard() {
                         <p>VIP: {selectedOrder.vip ? 'Да' : 'Нет'}</p>
                         <p>Повторный клиент: {selectedOrder.repeat ? 'Да' : 'Нет'}</p>
                         <div className="flex justify-between mt-4 space-x-2 flex-wrap">
-                            <button className="px-4 py-2 bg-green-500 text-white rounded-2xl hover:scale-105 transition" onClick={() => { updateStatus(selectedOrder.id, 'Выполнено'); setSelectedOrder(null); }}>Выполнено</button>
+                            <button className="px-4 py-2 bg-green-500 text-white rounded-2xl hover:scale-105 transition" onClick={() => { updateStatus(selectedOrder.id, 'Выполнен'); setSelectedOrder(null); }}>Выполнен</button>
                             <button className="px-4 py-2 bg-yellow-400 text-white rounded-2xl hover:scale-105 transition" onClick={() => { updateStatus(selectedOrder.id, 'В обработке'); setSelectedOrder(null); }}>В обработке</button>
                             <button className="px-4 py-2 bg-gray-300 text-black rounded-2xl hover:scale-105 transition" onClick={() => setSelectedOrder(null)}>Закрыть</button>
                             <button className="px-4 py-2 bg-purple-500 text-white rounded-2xl hover:scale-105 transition" onClick={() => toggleTag(selectedOrder.id,'vip')}>VIP</button>

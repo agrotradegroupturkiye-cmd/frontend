@@ -1,1 +1,15 @@
-import { Card, Button } from '@/components/ui'; export default function ClientOrderDetail() { return <Card>Детали заказа <Button>Отменить</Button></Card>; }
+'use client';
+import React from 'react';
+import { Card, Button } from '@/components/ui';
+
+interface Props {
+  orderId: string;
+}
+
+export default function ClientOrderDetail({ orderId }: Props) {
+  return (
+    <Card>
+      Детали заказа #{orderId} <Button>Отменить</Button>
+    </Card>
+  );
+}
