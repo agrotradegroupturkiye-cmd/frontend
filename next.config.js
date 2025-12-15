@@ -1,13 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  pageExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  typescript: {
-    ignoreBuildErrors: false,
+  experimental: {
+    appDir: true,
   },
-  images: {
-    unoptimized: true,
-  },
-}
+};
 
 module.exports = nextConfig;

@@ -1,2 +1,15 @@
 import '@/styles/globals.css';
-export default function RootLayout({ children }: { children: React.ReactNode }) { return (<html><body>{children}</body></html>); }
+import React from 'react';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="ru">
+      <head />
+      <body>{children}</body>
+    </html>
+  );
+}
