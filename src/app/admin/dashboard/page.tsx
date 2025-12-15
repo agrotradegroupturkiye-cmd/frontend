@@ -1,12 +1,10 @@
-'use client';
-import React from 'react';
-import { Card, Button } from '@/components/ui';
+import OrdersClient from "./OrdersClient";
 
-export default function AdminDashboard() {
-  return (
-    <Card>
-      <h1>Admin Dashboard</h1>
-      <Button>Click</Button>
-    </Card>
-  );
+export const metadata = {
+  title: "Дашборд заказов CleanGo",
+  description: "Админ панель заказов с live-update и анимацией",
+};
+
+export default function DashboardPage() {
+  return <OrdersClient />;
 }
