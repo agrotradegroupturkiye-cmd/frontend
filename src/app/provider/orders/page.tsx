@@ -1,26 +1,91 @@
 "use client";
-import React from "react";
+
+import React, { useEffect, useState } from "react";
 import ProviderLayout from "../layout";
-import { providerOrders } from "../../../lib/mocks/providerMock";
 
-const OrdersPage = () => (
-  <ProviderLayout>
-    <h2 className="text-xl font-semibold mb-4">Список заказов</h2>
-    <div className="flex flex-col space-y-4">
-      {providerOrders.length === 0 ? (
-        <p>Заказов нет</p>
+interface Order {
+  id: string;
+  service: string;
+  price: number;
+  provider: string;
+  date: string;
+  status: "paid" | "accepted" | "in_progress" | "done";
+  createdAt: string;
+}
+
+export default function ProviderOrdersPage() {
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  useEffect(() => {
+    import("@/app/lib/ordersStore").then(m => setOrders(m.getOrders()));
+  }, []);
+
+  const updateStatus = (id: string, status: Order["status"]) => {
+    const updated = orders.map((o) =>
+      o.id === id ? { ...o, status } : o
+    );
+
+    setOrders(updated);
+    localStorage.setItem("cleango_orders", JSON.stringify(updated));
+  };
+
+  return (
+    <ProviderLayout>
+      <h2 className="text-xl font-semibold mb-4">Заказы клиентов</h2>
+
+      {orders.length === 0 ? (
+        <p className="text-gray-500">Заказов нет</p>
       ) : (
-        providerOrders.map(order => (
-          <div key={order.id} className="p-4 bg-white rounded shadow">
-            <p><strong>Клиент:</strong> {order.client}</p>
-            <p><strong>Услуга:</strong> {order.service}</p>
-            <p><strong>Статус:</strong> {order.status}</p>
-            <p><strong>Дата:</strong> {order.date}</p>
-          </div>
-        ))
-      )}
-    </div>
-  </ProviderLayout>
-);
+        <div className="flex flex-col gap-4">
+          {orders.map((order) => (
+            <div
+              key={order.id}
+              className="p-4 bg-white rounded shadow flex flex-col gap-2"
+            >
+              <div className="font-semibold">{order.service}</div>
+              <div className="text-sm">Клиент: —</div>
+              <div className="text-sm">Дата: {order.date}</div>
+              <div className="font-medium">{order.price} ₸</div>
 
-export default OrdersPage;
+              <div className="text-sm">
+                Текущий статус:{" "}
+                <span className="font-semibold capitalize">
+                  {order.status.replace("_", " ")}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-2 mt-2">
+                {order.status === "paid" && (
+                  <button
+                    className="px-3 py-1 bg-blue-600 text-white rounded"
+                    onClick={() => updateStatus(order.id, "accepted")}
+                  >
+                    Принять
+                  </button>
+                )}
+
+                {order.status === "accepted" && (
+                  <button
+                    className="px-3 py-1 bg-purple-600 text-white rounded"
+                    onClick={() => updateStatus(order.id, "in_progress")}
+                  >
+                    В работе
+                  </button>
+                )}
+
+                {order.status === "in_progress" && (
+                  <button
+                    className="px-3 py-1 bg-green-600 text-white rounded"
+                    onClick={() => updateStatus(order.id, "done")}
+                  >
+                    Завершить
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </ProviderLayout>
+  );
+}
